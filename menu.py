@@ -69,23 +69,94 @@ def docker_run():
     Button(op_win, text='Submit', command=docker_run_op).grid(row=2, column=0, padx=10, pady=20)
     Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
 
+def docker_run_bg_op():
+    output = sp.getoutput('docker run -dit --name {} {}'.format(con_name, docker_run_image))
+    docker_run_op_win = Toplevel()
+    Label(docker_run_op_win, text=output).grid(row=3, column=0, columnspan=2, padx=10)    
+
 def docker_run_bg():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    e1 = Entry(op_win)
+    Label(op_win, text='Enter name of container: ').grid(row=0, column=0, padx=5, pady=10)
+    e1.grid(row=0, column=1, pady=10, padx=5)
+    global con_name
+    con_name = e1.get()
+    e2 = Entry(op_win)
+    Label(op_win, text='Enter name of image: ').grid(row=1, column=0, padx=5, pady=10)
+    e2.grid(row=1, column=1, pady=10, padx=5)
+    global docker_run_image
+    docker_run_image = e2.get()
+    Button(op_win, text='Submit', command=docker_run_bg_op).grid(row=2, column=0, padx=10, pady=20)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
+
+def docker_fg_op():
+    output = sp.getoutput('docker attach {}'.format(con_name))
+    docker_run_op_win = Toplevel()
+    Label(docker_run_op_win, text=output).grid(row=3, column=0, columnspan=2, padx=10)
 
 def con_fg():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    e1 = Entry(op_win)
+    Label(op_win, text='Enter name/id of container: ').grid(row=0, column=0, padx=5, pady=10)
+    e1.grid(row=0, column=1, pady=10, padx=5)
+    global con_name
+    con_name = e1.get()
+    Button(op_win, text='Submit', command=docker_fg_op).grid(row=2, column=0, padx=10, pady=20)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
+
+def con_stop_op():
+    output = sp.getoutput('docker stop {}'.format(con_name))
+    docker_run_op_win = Toplevel()
+    Label(docker_run_op_win, text=output).grid(row=3, column=0, columnspan=2, padx=10)
+
 
 def con_stop():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    e1 = Entry(op_win)
+    Label(op_win, text='Enter name/id of container: ').grid(row=0, column=0, padx=5, pady=10)
+    e1.grid(row=0, column=1, pady=10, padx=5)
+    global con_name
+    con_name = e1.get()
+    Button(op_win, text='Submit', command=con_stop_op).grid(row=2, column=0, padx=10, pady=20)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
+
+def con_ter_op():
+    output = sp.getoutput('docker rm {}'.format(con_name))
+    docker_run_op_win = Toplevel()
+    Label(docker_run_op_win, text=output).grid(row=3, column=0, columnspan=2, padx=10)
 
 def con_terminate():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    e1 = Entry(op_win)
+    Label(op_win, text='Enter name/id of container: ').grid(row=0, column=0, padx=5, pady=10)
+    e1.grid(row=0, column=1, pady=10, padx=5)
+    global con_name
+    con_name = e1.get()
+    Button(op_win, text='Submit', command=con_ter_op).grid(row=2, column=0, padx=10, pady=20)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
+
 
 def all_con_stop():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    output = sp.getoutput('docker stop $(docker ps -aq)')
+    Label(op_win, text=output).grid(row=1, column=0)
 
 def all_con_terminate():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    output = sp.getoutput('docker rm $(docker ps -aq)')
+    Label(op_win, text=output).grid(row=1, column=0)
 
 def delete_image():
     return
