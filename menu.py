@@ -159,19 +159,94 @@ def all_con_terminate():
     Label(op_win, text=output).grid(row=1, column=0)
 
 def delete_image():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    Label(op_win, text='Enter name of image: ').grid(row=0, column=0, padx=110, pady=200)
+    e = Entry(op_win)
+    e.grid(row=0, column=1, padx=110, pady=200)
+    image_delete_name = e.get()
+    output = sp.getoutput('docker rmi {}'.format(image_delete_name))
+    Label(op_win, text='Image deleted successfully \n {}'.format(output)).grid(row=1, column=0, columnspan=2, padx=110, pady=200)
+
+def command_run_op():
+    output = sp.getoutput('docker run {}  {}'.format(image_to_use, command))
+    op_win = Toplevel()
+    Label(op_win, text=output).grid(row=2, column=0, columnspan=2)
 
 def command_run():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    Label(op_win, text='Enter the name of image: ').grid(row=0, column=0, pady=20)
+    e1=Entry(op_win)
+    e1.grid(row=0, column=1)
+    global image_to_use
+    image_to_use = e1.get()
+    Label(op_win, text='Command to run: ').grid(row=1, column=0, pady=20)
+    e2 = Entry(op_win)
+    e2.grid(row=1, column=1)
+    global command
+    command = e2.get()
+    Button(op_win, text='Submit', command = command_run_op).grid(row=2, column=0)
+    Button(op_win, text='Back', command=main_menu).grid(row=2, column=1)
+
+
+def command_run_ter_op():
+    output = sp.getoutput('docker run --rm {}  {}'.format(image_to_use_ter, command_ter))
+    op_win = Toplevel()
+    Label(op_win, text=output).grid(row=2, column=0, columnspan=2)
+
 
 def command_run_terminate():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    Label(op_win, text='Enter the name of image: ').grid(row=0, column=0, pady=20)
+    e1=Entry(op_win)
+    e1.grid(row=0, column=1)
+    global image_to_use_ter
+    image_to_use_ter = e1.get()
+    Label(op_win, text='Command to run: ').grid(row=1, column=0, pady=20)
+    e2 = Entry(op_win)
+    e2.grid(row=1, column=1)
+    global command_ter
+    command_ter = e2.get()
+    Button(op_win, text='Submit', command = command_run_ter_op).grid(row=2, column=0)
+    Button(op_win, text='Back', command=main_menu).grid(row=2, column=1)
+
+def inspect_op():
+    output = sp.getoutput('docker inspect {}'.format(inspect_con))
+    op_win = Toplevel()
+    Label(op_win, text=output).grid(row=2, column=0, columnspan=2)
+
 
 def inspect():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    Label(op_win, text='Enter the name/id of container: ').grid(row=0, column=0, pady=20)
+    e1=Entry(op_win)
+    e1.grid(row=0, column=1)
+    global inspect_con
+    inspect_con = e1.get()
+    Button(op_win, text='Submit', command = inspect_op).grid(row=2, column=0)
+
+def logs_op():
+    output = sp.getoutput('docker logs {}'.format(logs_con))
+    op_win = Toplevel()
+    Label(op_win, text=output).grid(row=2, column=0, columnspan=2)
 
 def get_logs():
-    return
+    root.destroy()
+    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win.grid(row=0, column=0)
+    Label(op_win, text='Enter the name/id of container: ').grid(row=0, column=0, pady=20)
+    e1=Entry(op_win)
+    e1.grid(row=0, column=1)
+    global logs_con
+    logs_con = e1.get()
+    Button(op_win, text='Submit', command = logs_op).grid(row=2, column=0)
 
 def getvalue():
     option = value.get()
