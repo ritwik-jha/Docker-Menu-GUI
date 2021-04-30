@@ -17,7 +17,7 @@ def imagelist():
 def running_conlist():
     root.destroy()
     output = sp.getoutput('docker ps')
-    op_win = LabelFrame(main, padx=80, pady=300)
+    op_win = LabelFrame(main,pady=250)
     op_win.grid(row=0, column=0)
     Label(op_win, text=output, font=('arial',10)).grid(row=0, column=0, pady=50)
     Button(op_win, text='Go Back', command=main_menu).grid(row=1, column=0, pady=50)
@@ -25,7 +25,7 @@ def running_conlist():
 def all_conlist():
     root.destroy()
     output = sp.getoutput('docker ps -a')
-    op_win = LabelFrame(main, padx=80, pady=300)
+    op_win = LabelFrame(main, pady=250)
     op_win.grid(row=0, column=0)
     Label(op_win, text=output, font=('arial',10)).grid(row=0, column=0, pady=50)
     Button(op_win, text='Go Back', command=main_menu).grid(row=1, column=0, pady=50)
@@ -39,37 +39,23 @@ def image_pull_op():
 
 def image_pull():
     root.destroy()
-    op_win = LabelFrame(main, padx=80, pady=300)
+    op_win = LabelFrame(main, padx=120, pady=300)
     op_win.grid(row=0, column=0)
     global e
     e = Entry(op_win)
     Label(op_win, text='Enter name of image').grid(row=0, column=0, padx=5, pady=10)
     e.grid(row=0, column=1, pady=10, padx=5)
-    Button(op_win, text='Submit', command=image_pull_op).grid(row=1, column=0, columnspan=2, padx=10)
-    Button(op_win, text='Go Back', command=main_menu).grid(row=1, column=0, pady=50)
+    Button(op_win, text='Submit', command=image_pull_op).grid(row=1, column=0, padx=10)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=1, column=1, pady=50,padx=10)
 
-def docker_run_op():
-    con_name = e1.get()
-    docker_run_image = e2.get()
-    output = sp.getoutput('docker run -it --name {} {}'.format(con_name, docker_run_image))
-    docker_run_op_win = Toplevel()
-    Label(docker_run_op_win, text=output).grid(row=3, column=0, columnspan=2, padx=10)
 
 def docker_run():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main,padx=10,pady=250)
     op_win.grid(row=0, column=0)
-    global e1
-    e1 = Entry(op_win)
-    Label(op_win, text='Enter name of container: ').grid(row=0, column=0, padx=5, pady=10)
-    e1.grid(row=0, column=1, pady=10, padx=5)
-    global e2
-    e2 = Entry(op_win)
-    Label(op_win, text='Enter name of image: ').grid(row=1, column=0, padx=5, pady=10)
-    e2.grid(row=1, column=1, pady=10, padx=5)
-    
-    Button(op_win, text='Submit', command=docker_run_op).grid(row=2, column=0, padx=10, pady=20)
-    Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
+    Label(op_win, text='''To launch a container with interactive mode run the following command in the terminal: 
+    \n docker   run   -it   --name     con_name     image_to_be_used''').grid(row=0,column=0)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=1, column=0, pady=50)
 
 def docker_run_bg_op():
     con_name = e3.get()
@@ -80,7 +66,7 @@ def docker_run_bg_op():
 
 def docker_run_bg():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main, padx=110, pady=250)
     op_win.grid(row=0, column=0)
     global e3
     e3 = Entry(op_win)
@@ -95,23 +81,14 @@ def docker_run_bg():
     Button(op_win, text='Submit', command=docker_run_bg_op).grid(row=2, column=0, padx=10, pady=20)
     Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
 
-def docker_fg_op():
-    con_name = e5.get()
-    output = sp.getoutput('docker attach {}'.format(con_name))
-    docker_run_op_win = Toplevel()
-    Label(docker_run_op_win, text=output).grid(row=3, column=0, columnspan=2, padx=10)
 
 def con_fg():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main,pady=250, padx=10)
     op_win.grid(row=0, column=0)
-    global e5
-    e5 = Entry(op_win)
-    Label(op_win, text='Enter name/id of container: ').grid(row=0, column=0, padx=5, pady=10)
-    e5.grid(row=0, column=1, pady=10, padx=5)
-    
-    Button(op_win, text='Submit', command=docker_fg_op).grid(row=2, column=0, padx=10, pady=20)
-    Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
+    Label(op_win, text='''To attach a container running in background run the following command in the terminal: 
+    \n docker  attach  con_name ''').grid(row=0,column=0)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=1, column=0, pady=50)
 
 def con_stop_op():
     con_name = e6.get()
@@ -123,7 +100,7 @@ def con_stop_op():
 
 def con_stop():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main, padx=110, pady=250)
     op_win.grid(row=0, column=0)
     global e6
     e6 = Entry(op_win)
@@ -142,7 +119,7 @@ def con_ter_op():
 
 def con_terminate():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main, padx=110, pady=250)
     op_win.grid(row=0, column=0)
     global e7
     e7 = Entry(op_win)
@@ -158,14 +135,20 @@ def all_con_stop():
     op_win = LabelFrame(main, padx=110, pady=200)
     op_win.grid(row=0, column=0)
     output = sp.getoutput('docker stop $(docker ps -aq)')
-    Label(op_win, text=output).grid(row=1, column=0)
+    tex = 'Successfully stopped the following containers: \n' + output
+    Label(op_win, text=tex).grid(row=1, column=0)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=0, pady=50)
+
 
 def all_con_terminate():
     root.destroy()
     op_win = LabelFrame(main, padx=110, pady=200)
     op_win.grid(row=0, column=0)
     output = sp.getoutput('docker rm $(docker ps -aq)')
-    Label(op_win, text=output).grid(row=1, column=0)
+    tex = 'Successfully terminated the following containers: \n' + output
+    Label(op_win, text=tex).grid(row=1, column=0)
+    Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
+
 
 def delete_image_op():
     image_delete_name = e7.get()
@@ -176,12 +159,12 @@ def delete_image_op():
 
 def delete_image():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main, padx=130, pady=250)
     op_win.grid(row=0, column=0)
-    Label(op_win, text='Enter name of image: ').grid(row=0, column=0, padx=110, pady=200)
+    Label(op_win, text='Enter name of image: ').grid(row=0, column=0)
     global e7
     e7 = Entry(op_win)
-    e7.grid(row=0, column=1, padx=110, pady=200)
+    e7.grid(row=0, column=1)
 
     Button(op_win, text='Submit', command=delete_image_op).grid(row=2, column=0, padx=10, pady=20)
     Button(op_win, text='Go Back', command=main_menu).grid(row=2, column=1, pady=50)
@@ -196,7 +179,7 @@ def command_run_op():
 
 def command_run():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main, padx=130, pady=250)
     op_win.grid(row=0, column=0)
     Label(op_win, text='Enter the name of image: ').grid(row=0, column=0, pady=20)
     global e8
@@ -221,7 +204,7 @@ def command_run_ter_op():
 
 def command_run_terminate():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main, padx=120, pady=250)
     op_win.grid(row=0, column=0)
     Label(op_win, text='Enter the name of image: ').grid(row=0, column=0, pady=20)
     global e10
@@ -244,7 +227,7 @@ def inspect_op():
 
 def inspect():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main, padx=110, pady=250)
     op_win.grid(row=0, column=0)
     Label(op_win, text='Enter the name/id of container: ').grid(row=0, column=0, pady=20)
     global e12
@@ -262,7 +245,7 @@ def logs_op():
 
 def get_logs():
     root.destroy()
-    op_win = LabelFrame(main, padx=110, pady=200)
+    op_win = LabelFrame(main, padx=110, pady=250)
     op_win.grid(row=0, column=0)
     Label(op_win, text='Enter the name/id of container: ').grid(row=0, column=0, pady=20)
     global e13
@@ -316,7 +299,7 @@ def main_menu():
         widget.destroy()
     #op_win.destroy()
     #main.destroy()
-    root = LabelFrame(main)
+    root = LabelFrame(main, pady=30)
     root.grid(row=0, column=0)
     Label(root, text='DOCKER MENU', font=('arial',20,'bold')).grid(row=0, column=0, columnspan=3, padx=120, sticky='W')
     Label(root, text='').grid(row=1, column=0)
